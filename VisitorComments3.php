@@ -6,11 +6,11 @@
         <!--   
          Exercise 02_05_01
          Author: Tabitha Siclovan
-         Date: October 05, 2018
+         Date: October 11, 2018
         
-         VisitorComments.php
+         VisitorComments3.php
         -->
-    <title>Visitor Comments</title>
+    <title>Visitor Comments 3</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0">
     <script src="modernizr.custom.65897.js"></script>
@@ -38,11 +38,31 @@
                 echo "\$timeStamp: $timeStamp<br>";
                 $saveFileName = "$dir/Comment.$timeStamp.txt";
                 echo "\$saveFileName: $saveFileName<br>";
-                if (file_put_contents($saveFileName, $saveString) > 0) {
-                    echo "File \"" . htmlentities($saveFileName) . "\"successfully saved.<br>\n";
+                //Write to open the file (if file does not exist will create it), b means binary 
+                $fileHandle = fopen($saveFileName, "wb");
+                //Success, opens file
+                if ($fileHandle === false) {
+                     echo "There was an error creating \"" . htmlentities($saveFileName) . "\".<br>\n";
                 }
                 else {
-                    echo "There was an error writing \"" . htmlentities($saveFileName) . "\".<br>\n";
+                    //Locks the file here
+                    if (flock($fileHandle, LOCK_EX)) {   
+                        //Success
+                        if (fwrite($fileHandle, $saveString) > 0) {
+                            echo "Successfully wrote to \"" . htmlentities($saveFileName) . "\".<br>\n";
+                        }
+                        else {
+                            //Failure
+                            echo "There was an error writing to \"" . htmlentities($saveFileName) . "\".<br>\n";
+                        }
+                        //If successfully write will unlock here
+                        flock($fileHandle, LOCK_UN);
+                    }
+                    else {
+                         echo "There was an error locking file \"" . htmlentities($saveFileName) . "\"for writing.<br>\n";
+                    }
+                    //close the file = success
+                    fclose($fileHandle);
                 }
             }
         }
@@ -52,8 +72,8 @@
         chmod($dir, 0666);
     }
     ?>
-    <h2>Visitor Comments</h2>
-    <form action="VisitorComments.php" method="post">
+    <h2>Visitor Comments 3</h2>
+    <form action="VisitorComments3.php" method="post">
         Your Name: <input type="text" name="name"><br>
         Your Email: <input type="email" name="email"><br>
         <textarea name="comment" rows="6" cols="100"></textarea><br>
