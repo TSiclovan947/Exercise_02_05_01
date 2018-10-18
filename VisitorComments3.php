@@ -25,12 +25,14 @@
                 echo "Unknown visitor\n";
             }
             else {
+                //displays the different file fields
                 $saveString = stripslashes($_POST['name']) . "\n";
                 $saveString .= stripslashes($_POST['email']) . "\n";
                 $saveString .= date('r') . "\n";
                 $saveString .= stripslashes($_POST['comment']) . "\n";
                 echo "\$saveString: $saveString<br>";
                 $currentTime = microtime();
+                //Echoes the current time
                 echo "\$currentTime: $currentTime<br>";
                 $timeArray = explode(" ", $currentTime);
                 echo var_dump($timeArray) . "<br>";

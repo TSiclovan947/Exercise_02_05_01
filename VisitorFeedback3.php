@@ -32,6 +32,7 @@
             echo "From: " . htmlentities($comment[0]) . "<br>\n";
             echo "Email Address: " . htmlentities($comment[1]) . "<br>\n";
             echo "Date: " . htmlentities($comment[2]) . "<br>\n";
+            //Displays the comment
             $commentLines = count($comment);
             for ($i = 3; $i < $commentLines; $i++) {
                 echo htmlentities($comment[$i]) . "<br>\n";
