@@ -19,12 +19,16 @@
 <body>
     <h2>Backup Comments</h2>
     <?php
+    //Variable source containing a folder called comments
     $source = "./comments";
+    //Variable containing a backup folder of the comments in the comments folder
     $destination = "./backups";
+    //If a folder called backups does not exist under any of these names, will create the folders
     if (!is_dir($destination)) {
         mkdir($destination);
         chmod($destination, 0757);
     }
+    //If a folder called comments does not exist under any of these names, will create the folders 
     if (!is_dir($source)) {
         echo "The source directory did not exist, created it, no files to backup.<br>\n";
         mkdir($source);
@@ -33,6 +37,8 @@
     else {
         $totalFiles = 0;
         $filesCopied = 0;
+        //Takes the comments folder and places what is in the comments 
+        //folder in the backups folder to back the comments folder up
         $dirEntries = scandir($source);
         foreach ($dirEntries as $entry) {
             if ($entry != "." && $entry != "..") {

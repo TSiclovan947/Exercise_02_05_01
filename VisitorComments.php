@@ -18,6 +18,7 @@
 
 <body>
     <?php
+    //Variable containing comments folder
     $dir = "./comments";
     if (is_dir($dir)) {
         if (isset($_POST['save'])) {
@@ -25,8 +26,10 @@
                 echo "Unknown visitor\n";
             }
             else {
+                //displays the different file fields
                 $saveString = stripslashes($_POST['name']) . "\n";
                 $saveString .= stripslashes($_POST['email']) . "\n";
+                //The r grabs a formatted date
                 $saveString .= date('r') . "\n";
                 $saveString .= stripslashes($_POST['comment']) . "\n";
                 echo "\$saveString: $saveString<br>";
@@ -35,19 +38,23 @@
                 $timeArray = explode(" ", $currentTime);
                 echo var_dump($timeArray) . "<br>";
                 $timeStamp = (float)$timeArray[1] + (float)$timeArray[0];
+                //Add a time stamp to see when the user posted the comment
                 echo "\$timeStamp: $timeStamp<br>";
                 $saveFileName = "$dir/Comment.$timeStamp.txt";
                 echo "\$saveFileName: $saveFileName<br>";
                 if (file_put_contents($saveFileName, $saveString) > 0) {
+                    //The file successfully saves
                     echo "File \"" . htmlentities($saveFileName) . "\"successfully saved.<br>\n";
                 }
                 else {
+                    //There is an error and the file did not save
                     echo "There was an error writing \"" . htmlentities($saveFileName) . "\".<br>\n";
                 }
             }
         }
     }
     else {
+        //If the comments folder does not exist, a directory will be created
         mkdir($dir);
         chmod($dir, 0666);
     }

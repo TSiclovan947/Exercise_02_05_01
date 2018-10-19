@@ -18,6 +18,7 @@
 
 <body>
     <?php
+    //Variable containing comments folder
     $dir = "./comments";
     if (is_dir($dir)) {
         if (isset($_POST['save'])) {
@@ -25,6 +26,7 @@
                 echo "Unknown visitor\n";
             }
             else {
+                //displays the different file fields
                 $saveString = stripslashes($_POST['name']) . "\n";
                 $saveString .= stripslashes($_POST['email']) . "\n";
                 $saveString .= date('r') . "\n";

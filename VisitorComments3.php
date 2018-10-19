@@ -18,6 +18,7 @@
 
 <body>
     <?php
+    //Variable containing comments folder
     $dir = "./comments";
     if (is_dir($dir)) {
         if (isset($_POST['save'])) {
